@@ -5,11 +5,18 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:7900/eureka/
-    registry-fetch-interval-seconds: 30
+      #从eureka服务器注册表中获取注册信息的时间间隔
+    registry-fetch-interval-seconds: 10
+    healthcheck:
+      #可以上报服务的真实健康状态
+      enabled: true
     enabled: true
       #,http://localhost:7901/eureka/,http://localhost:7902/eureka/
   instance:
-    lease-renewal-interval-in-seconds: 30
+    #续约更新时间间隔
+    lease-renewal-interval-in-seconds: 2
+    #最后一次心跳时间后leaseExpirationDurationInSeconds秒就认为是下线了，默认是90秒
+    lease-expiration-duration-in-seconds: 3
 
 spring:
   application:

@@ -10,12 +10,26 @@ server:
 
 eureka:
   client:
+    #是否将自己注册到Eureka Server,默认为true，由于当前就是server，故而设置成false，表明该服务不会向eureka注册自己的信息
     register-with-eureka: false
+    #是否从eureka server获取注册信息，由于单节点，不需要同步其他节点数据，用false
     fetch-registry: false
     service-url:
       # 5 24
-      defaultZone: http://localhost:7900/eureka/,http://localhost:7901/eureka/,http://localhost:7902/eureka/
-
+      defaultZone: http://localhost:7900/eureka/
+      #多节点
+     #defaultZone: http://localhost:7900/eureka/,http://localhost:7901/eureka/,http://localhost:7902/eureka/
+  server:
+    # 自我保护看自己情况
+    enable-self-preservation: false
+    # 续约阈值，和自我保护相关
+    #    renewal-percent-threshold: 0.85
+    # server剔除过期服务的时间间隔
+    eviction-interval-timer-in-ms: 1000
+    # 是否开启readOnly读缓存
+    #    use-read-only-response-cache: true
+    # 关闭 readOnly
+#    response-cache-update-interval-ms: 1000
 
 
 
