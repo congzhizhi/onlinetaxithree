@@ -7,7 +7,7 @@ server:
 
 
 ---
-
+#eureka参数配置：https://www.cnblogs.com/chry/p/7992885.html
 eureka:
   client:
     #是否将自己注册到Eureka Server,默认为true，由于当前就是server，故而设置成false，表明该服务不会向eureka注册自己的信息
@@ -22,14 +22,21 @@ eureka:
   server:
     # 自我保护看自己情况
     enable-self-preservation: false
-    # 续约阈值，和自我保护相关
-    #    renewal-percent-threshold: 0.85
-    # server剔除过期服务的时间间隔
+
+    #续约阈值，和自我保护相关，自我保护开启时候可用，表示收到的心跳包比例
+    #renewal-percent-threshold: 0.85
+
+    # server剔除过期服务的时间间隔，
+    #要配合客户端的lease-renewal-interval-in-seconds(续约更新时间间隔)
+    #和lease-expiration-duration-in-seconds(最后一次心跳时间后leaseExpirationDurationInSeconds秒就认为是下线了，默认是90秒)
     eviction-interval-timer-in-ms: 1000
-    # 是否开启readOnly读缓存
-    #    use-read-only-response-cache: true
-    # 关闭 readOnly
-#    response-cache-update-interval-ms: 1000
+
+    # 是否开启readOnly读缓存, 也解释了Eureka为啥是AP
+    #Eureka Server 为了提升自身 REST API 接口的性能，提供了两个缓存：
+    #一个是基于 ConcurrentMap 的 readOnlyCacheMap，一个是基于 Guava Cache 的 readWriteCacheMap。
+    use-read-only-response-cache: true
+    #在use-read-only-response-cache为true的时候生效
+    response-cache-update-interval-ms: 2000
 
 
 
